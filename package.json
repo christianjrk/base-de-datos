@@ -1,0 +1,31 @@
+{
+  "name": "proyecto4-basedatos",
+  "version": "1.0.0",
+  "description": "Tienda solidaria con Express y MongoDB",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "mongoose",
+    "tienda",
+    "nodejs"
+  ],
+  "author": "Christian Jaramillo Rotavisky",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
