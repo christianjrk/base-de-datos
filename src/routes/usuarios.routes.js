@@ -3,16 +3,16 @@ const express = require("express");
 const router = express.Router();
 const usuariosController = require("../controllers/usuarios.controller");
 
-// Registro de usuario
+// Registro
 router.post("/register", usuariosController.register);
 
-// Login de usuario
+// Login
 router.post("/login", usuariosController.login);
 
-// Perfil de usuario
+// Perfil por id
 router.get("/perfil/:id", usuariosController.getPerfil);
 
-// Logout de usuario
+// Logout
 router.post("/logout", usuariosController.logout);
 
 module.exports = router;

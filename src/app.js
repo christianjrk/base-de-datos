@@ -1,45 +1,31 @@
 // src/app.js
+require("dotenv").config();
 const express = require("express");
-const path = require("path");
+const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
-require("dotenv").config();
 
-const connectDB = require("./database/db.config");
-const registrarHistorial = require("./middlewares/registrarHistorial");
+const usuariosRoutes = require("./routes/usuarios.routes");
+const productosRoutes = require("./routes/productos.routes");
+const paginasRoutes = require("./routes/paginas.routes");
 
 const app = express();
 
-// ===== Conexión a MongoDB =====
-connectDB();
-
-// ===== Middlewares globales =====
-app.use(cors());
+// Middlewares
 app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// ¡IMPORTANTE! Parseo de JSON y formularios
-app.use(express.json());                         // <-- aquí
-app.use(express.urlencoded({ extended: true })); // <-- y aquí
-
-// Archivos estáticos
-app.use(express.static(path.join(__dirname, "../public")));
-
-// Motor de vistas EJS
-app.set("views", path.join(__dirname, "../public"));
-app.set("view engine", "ejs");
-
-// Historial de peticiones
-app.use(registrarHistorial);
-
-// ===== Rutas =====
-const usuariosRoutes = require("./routes/usuarios.routes");
-const productosRoutes = require("./routes/productos.routes");
-const comprasRoutes = require("./routes/compras.routes");
-const paginasRoutes = require("./routes/paginas.routes");
-
+// Rutas
 app.use("/usuarios", usuariosRoutes);
 app.use("/productos", productosRoutes);
-app.use("/compras", comprasRoutes);
 app.use("/", paginasRoutes);
 
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ Conectado a MongoDB"))
+  .catch((err) => console.error("❌ Error al conectar con MongoDB:", err));
+
+// Exportar app
 module.exports = app;
